@@ -1,0 +1,18 @@
+FROM lcr.loongnix.cn/library/openjdk:17-slim
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    ca-certificates \
+    git \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN wget -O /tmp/maven-3.9.16.tar.gz https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.16/apache-maven-3.9.16-bin.tar.gz \
+    && mkdir -p /opt/maven \
+    && tar -xzf /tmp/maven-3.9.16.tar.gz -C opt/maven --strip-components=1 \
+    && rm -f /tmp/maven-3.9.16.tar.gz
+
+ENV MAVEN_HOME=/opt/maven
+ENV PATH=$MAVEN_HOME/bin:$PATH
+ENV MAVEN_OPTS="-Xmx2048m"
+
+CMD ["/bin/bash"]
