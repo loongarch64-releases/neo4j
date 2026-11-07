@@ -1,6 +1,8 @@
 name: Auto Build neo4j (Self-hosted)
 
 on:
+  schedule:
+    - cron: '31 16 * * *'
   workflow_dispatch:
 
 env:
